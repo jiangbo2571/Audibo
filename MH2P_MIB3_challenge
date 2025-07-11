@@ -1,160 +1,46 @@
-import base64
-import hashlib
-import logging
+# Decompiled with PyLingual (https://pylingual.io)
+# Internal filename: challenge.py
+# Bytecode version: 3.10.0rc2 (3439)
+# Source timestamp: 1970-01-01 00:00:00 UTC (0)
+
+import binascii
+import random
+import string
+import OpenSSL
+from OpenSSL import crypto
 import os
-from typing import NamedTuple
 
-from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.backends import default_backend
-
-# 设置更详细的日志记录
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-# 常量
-CHALLENGE_FILE = "mmx_challenge.txt"
-RESPONSE_FILE = "mmx_response.txt"
-PRIVATE_KEY_FILE = "private.pem"
-
-class MMXChallenge(NamedTuple):
-    algorithm_type: bytes
-    random_challenge: bytes
-    software_version: bytes
-    chip_id: bytes
-    fazit: bytes
-    size: int
-
-def load_challenge(challenge_file: str) -> MMXChallenge:
+def get_random_unicode(length):
     try:
-        with open(challenge_file, 'r') as f:
-            hex_encoded_challenge = f.read().strip()
-            logger.debug(f"Raw challenge file content: {hex_encoded_challenge}")
-            
-        challenge_size = len(hex_encoded_challenge)
-        challenge_data = bytes.fromhex(hex_encoded_challenge)
-        logger.debug(f"Decoded challenge data: {challenge_data.hex()}")
-        
-        parts = challenge_data.split(b'\x0a')  # 按换行符分割
-        
-        if len(parts) < 5:
-            raise ValueError(f"Challenge data requires 5 parts, got {len(parts)}")
-        
-        challenge = MMXChallenge(
-            algorithm_type=parts[0],
-            random_challenge=parts[1],
-            software_version=parts[2],
-            chip_id=parts[3],
-            fazit=parts[4],
-            size=challenge_size
-        )
-
-        logger.info("Successfully parsed challenge",
-                   extra={
-                       "algorithmType": challenge.algorithm_type,
-                       "randomChallenge": challenge.random_challenge.hex(),
-                       "softwareVersion": challenge.software_version,
-                       "chipID": challenge.chip_id.hex(),
-                       "FAZIT": challenge.fazit.hex(),
-                   })
-        
-        return challenge
-    
-    except Exception as e:
-        logger.error(f"Failed to load challenge: {str(e)}", exc_info=True)
-        raise
-
-def sign_data(message: bytes) -> bytes:
-    try:
-        logger.debug(f"Message to sign (hex): {message.hex()}")
-        logger.debug(f"Message length: {len(message)} bytes")
-        
-        # 从文件加载私钥
-        with open(PRIVATE_KEY_FILE, 'rb') as key_file:
-            private_key_bytes = key_file.read()
-            logger.debug(f"Private key file size: {len(private_key_bytes)} bytes")
-        
-        # 加载RSA私钥
-        priv_key = serialization.load_pem_private_key(
-            private_key_bytes,
-            password=None,
-            backend=default_backend()
-        )
-        logger.debug("Private key loaded successfully")
-        
-        # 签名
-        signature = priv_key.sign(
-            message,
-            padding.PKCS1v15(),
-            hashes.SHA256()
-        )
-        
-        logger.debug("Signed successfully",
-                    extra={
-                        "signature_length": len(signature),
-                        "signature_hex": signature.hex()
-                    })
-        
-        return signature
-    
-    except Exception as e:
-        logger.error(f"Error in sign_data: {str(e)}", exc_info=True)
-        raise
-
-def sign_challenge(challenge: MMXChallenge) -> bytes:
-    try:
-        data_to_sign = bytearray()
-        data_to_sign.extend(challenge.random_challenge)
-        data_to_sign.extend(bytes(0x13))  # 19 null bytes
-        data_to_sign.extend(challenge.chip_id)
-        data_to_sign.append(0x0a)  # 换行符
-        data_to_sign.extend(challenge.software_version)
-
-        logger.debug("Constructed data to sign",
-                    extra={
-                        "hex": data_to_sign.hex(),
-                        "length": len(data_to_sign)
-                    })
-
-        signature = sign_data(data_to_sign)
-        return signature
-    
-    except Exception as e:
-        logger.error(f"Failed to sign challenge: {str(e)}", exc_info=True)
-        raise
-
-def main():
-    try:
-        logger.info("Starting challenge processing")
-        
-        # 1. 加载挑战文件
-        challenge = load_challenge(CHALLENGE_FILE)
-        
-        # 2. 签名挑战数据
-        signature = sign_challenge(challenge)
-        
-        # 3. 准备响应数据
-        response_pad = 24
-        response_data = bytearray()
-        response_data.extend(challenge.random_challenge)
-        response_data.extend(bytes(response_pad))
-        response_data.extend(signature)
-        
-        # 4. 转换为大写十六进制字符串
-        response_string = response_data.hex().upper()
-        
-        # 5. 写入响应文件
-        with open(RESPONSE_FILE, 'w') as f:
-            f.write(response_string)
-            
-        logger.info("Successfully generated response file")
-        
-    except Exception as e:
-        logger.error(f"Fatal error: {str(e)}", exc_info=True)
-        exit(1)
-
-if __name__ == "__main__":
-    main()
+        get_char = unichr
+    except NameError:
+        get_char = chr
+    include_ranges = [(128, 999)]
+    alphabet = [get_char(code_point) for current_range in include_ranges for code_point in range(current_range[0], current_range[1] + 1)]
+    return ''.join((random.choice(alphabet) for i in range(length)))
+if __name__ == '__main__':
+    print(' @ Audibo')
+    print(' @ NOTE: Please put private.pem to root path of the generator.')
+    print('-------------------------------------------------------------------------------')
+    if os.path.exists('private.pem'):
+        key_file = open('private.pem', 'r')
+        key = key_file.read()
+        key_file.close()
+        pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, key)
+        challenge = input(' [CHALLENGE] ')
+        if challenge:
+            challenge_array = challenge.split('0A')
+            print('-------------------------------------------------------------------------------')
+            random_data = challenge_array[1]
+            random_string = get_random_unicode(9)
+            random_string2 = ''.join((random.choice(string.punctuation + string.whitespace) for i in range(5)))
+            data = (binascii.unhexlify(random_data).decode('utf-8') + '\n' + random_string + binascii.unhexlify(challenge_array[3]).decode('utf-8') + '\n' + binascii.unhexlify(challenge_array[2]).decode('utf-8')).encode('utf-8')
+            sign = OpenSSL.crypto.sign(pkey, data, 'sha256')
+            print(' [RESPONSE] ' + random_data + '0A' + binascii.hexlify(random_string.encode('utf-8')).decode('utf-8').upper() + binascii.hexlify(random_string2.encode('utf-8')).decode('utf-8').upper() + sign.hex().upper())
+            input('\n Press enter to exit')
+        else:
+            print(' [!] CHALLENGE COULD NOT BE EMPTY ...')
+            input('\n Press enter to exit')
+    else:
+        print(' [!] private.pem not found ...')
+        input('\n Press enter to exit')
