@@ -9,4 +9,4 @@ Copy the obtained value to the challenge
 Generate Response
 
 
-good lock！！
+good luck！！
