@@ -74,7 +74,8 @@ Features:
 © 2023 Audibo""",
                 "invalid_format": "Invalid challenge format - expected 4 segments separated by 0A",
                 "error": "Error",
-                "warning": "Warning"
+                "warning": "Warning",
+                "failed_to_process": "Failed to process challenge"
             },
             "zh": {
                 "title": f"Audibo挑战响应生成器 v{self.version}",
@@ -123,7 +124,108 @@ Features:
 © 2023 Audibo""",
                 "invalid_format": "无效的挑战格式 - 需要4个由0A分隔的部分",
                 "error": "错误",
-                "warning": "警告"
+                "warning": "警告",
+                "failed_to_process": "处理挑战失败"
+            },
+            "de": {
+                "title": f"Audibo Challenge Response Generator v{self.version}",
+                "file_menu": "Datei",
+                "load_key": "Privaten Schlüssel laden",
+                "exit": "Beenden",
+                "help_menu": "Hilfe",
+                "documentation": "Dokumentation",
+                "about": "Über",
+                "language_menu": "Sprache",
+                "english": "Englisch",
+                "chinese": "Chinesisch",
+                "german": "Deutsch",
+                "russian": "Russisch",
+                "key_info": "Privater Schlüssel Information",
+                "no_key_loaded": "Kein privater Schlüssel geladen",
+                "key_path": "Schlüssel Pfad: {}",
+                "challenge_label": "Challenge:",
+                "generate_btn": "Antwort generieren",
+                "copy_btn": "In Zwischenablage kopieren",
+                "clear_btn": "Löschen",
+                "view_log_btn": "Challenges anzeigen",
+                "response_label": "Antwort",
+                "status_ready": "Bereit",
+                "key_load_success": "Privater Schlüssel erfolgreich geladen",
+                "key_load_failed": "Laden des privaten Schlüssels fehlgeschlagen",
+                "key_loaded_from": "Privater Schlüssel geladen von {}",
+                "key_load_error": "Fehler beim Laden des privaten Schlüssels",
+                "empty_challenge": "Challenge darf nicht leer sein",
+                "no_key_error": "Kein privater Schlüssel geladen",
+                "response_generated": "Antwort erfolgreich generiert",
+                "response_copied": "Antwort in Zwischenablage kopiert",
+                "no_response": "Keine Antwort zum Kopieren",
+                "fields_cleared": "Felder gelöscht",
+                "log_cleared": "Challenge Log gelöscht",
+                "about_title": f"Audibo Challenge Response Generator v{self.version}",
+                "about_text": f"""Ein sicheres Tool zur Generierung signierter Antworten auf Audibo-Challenges.
+
+Version: {self.version}
+Funktionen:
+- Laden privater Schlüssel von jedem Ort
+- Kopieren-in-Zwischenablage-Funktion
+- Mehrsprachige Unterstützung (EN/CN/DE/RU)
+- Challenge-Historie-Protokollierung
+
+© 2023 Audibo""",
+                "invalid_format": "Ungültiges Challenge-Format - erwartet 4 durch 0A getrennte Segmente",
+                "error": "Fehler",
+                "warning": "Warnung",
+                "failed_to_process": "Challenge-Verarbeitung fehlgeschlagen"
+            },
+            "ru": {
+                "title": f"Audibo Challenge Response Generator v{self.version}",
+                "file_menu": "Файл",
+                "load_key": "Загрузить приватный ключ",
+                "exit": "Выход",
+                "help_menu": "Помощь",
+                "documentation": "Документация",
+                "about": "О программе",
+                "language_menu": "Язык",
+                "english": "Английский",
+                "chinese": "Китайский",
+                "german": "Немецкий",
+                "russian": "Русский",
+                "key_info": "Информация о приватном ключе",
+                "no_key_loaded": "Приватный ключ не загружен",
+                "key_path": "Путь к ключу: {}",
+                "challenge_label": "Челлендж:",
+                "generate_btn": "Сгенерировать ответ",
+                "copy_btn": "Копировать в буфер",
+                "clear_btn": "Очистить",
+                "view_log_btn": "Просмотр истории челленджей",
+                "response_label": "Ответ",
+                "status_ready": "Готов",
+                "key_load_success": "Приватный ключ успешно загружен",
+                "key_load_failed": "Ошибка загрузки приватного ключа",
+                "key_loaded_from": "Приватный ключ загружен из {}",
+                "key_load_error": "Ошибка при загрузке приватного ключа",
+                "empty_challenge": "Челлендж не может быть пустым",
+                "no_key_error": "Приватный ключ не загружен",
+                "response_generated": "Ответ успешно сгенерирован",
+                "response_copied": "Ответ скопирован в буфер",
+                "no_response": "Нет ответа для копирования",
+                "fields_cleared": "Поля очищены",
+                "log_cleared": "История челленджей очищена",
+                "about_title": f"Audibo Challenge Response Generator v{self.version}",
+                "about_text": f"""Безопасный инструмент для генерации подписанных ответов на челленджи Audibo.
+
+Версия: {self.version}
+Функции:
+- Загрузка приватных ключей из любого места
+- Функция копирования в буфер
+- Поддержка нескольких языков (EN/CN/DE/RU)
+- Логирование истории челленджей
+
+© 2023 Audibo""",
+                "invalid_format": "Неверный формат челленджа - ожидается 4 сегмента, разделенных 0A",
+                "error": "Ошибка",
+                "warning": "Предупреждение",
+                "failed_to_process": "Ошибка обработки челленджа"
             }
         }
         
